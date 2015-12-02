@@ -10,15 +10,22 @@
     var axis0Tuple = axis0Tuples.Tuple,
         axis1Tuple = axis1Tuples.Tuple;
 
+/* ********************************** Axis0 Hierarchical Structure **************************************** */
+
+    var captions = [];
+    var obj={};
+    var flag = false;
+    var count = 0;
+
     for (var axis0HierLevel = 0, axis0HierLen = axis0Tuple[0].Member.length ; axis0HierLevel < axis0HierLen; axis0HierLevel++) {
-      var captions = [];
-      var obj={};
-      var flag = false;
-      var count = 0;
+      captions = [];
+      obj={};
+      flag = false;
+      count = 0;
     for (var axis0TupleIndex in axis0Tuple){
         if(!flag){
           flag = true;
-          console.log("hi");
+      //    console.log("hi");
           obj.caption = axis0Tuple[0].Member[axis0HierLevel].Caption;
           obj.colspan = count;
           captions.push(obj);
@@ -39,24 +46,88 @@
               }
             }
         }
-
-        console.log(count);
+      //  console.log(count);
       }
-      console.log(count);
-      console.log(captions);
+    //  console.log(count);
+    //  console.log(captions);
       var template0 = $.trim($("#axis0_insersion").html()),
       frag0='<tr>';
+        for(var axis1MemberIndex=0, axis1Member = axis1Tuple[0].Member.length; axis1MemberIndex < axis1Member; axis1MemberIndex++){
+          frag0 += '<th></th>';
+        }
       $.each(captions, function(index,obj){
         if (index < captions.length-1){
-       frag0 += template0.replace(/{{level}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th>");
+       frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th>");
       }
       else {
-       frag0 += template0.replace(/{{level}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th></tr>");
+       frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th></tr>");
       }
       });
       $('body').append(frag0);
     }
-    // console.log();
+
+/* ********************************** Axis1 Hierarchical Structure **************************************** */
+
+    for (var axis1HierLevel = 0, axis1HierLen = axis1Tuple[0].Member.length ; axis1HierLevel < axis1HierLen; axis1HierLevel++) {
+      captions = [];
+      obj={};
+      flag = false;
+      count = 0;
+    for (var axis1TupleIndex in axis1Tuple){
+        if(!flag){
+          flag = true;
+      //    console.log("hi");
+          obj.caption = axis1Tuple[0].Member[axis1HierLevel].Caption;
+          obj.colspan = count;
+          captions.push(obj);
+        }
+        if(obj.caption !== axis1Tuple[axis1TupleIndex].Member[axis1HierLevel].Caption){
+          if (obj.caption){obj = {};}
+          obj.caption = axis1Tuple[axis1TupleIndex].Member[axis1HierLevel].Caption;
+          count= 1;
+          obj.colspan = count;
+          captions.push(obj);
+          obj={};
+        }
+        else {
+            count++;
+            for (var caption1Index in captions){
+              if (captions[caption1Index].caption == axis1Tuple[axis1TupleIndex].Member[axis1HierLevel].Caption){
+                captions[caption1Index].colspan = count;
+              }
+            }
+        }
+      }
+      console.log(captions);
+
+    //  if (! ($("body").children("#dataTable").children("tr#tobeAppendend"))){
+  //  console.log($.find("#tobeAppendend"));
+  //    if (! document.getElementById("#tobeAppendend")){
+
+  if ($.find("#tobeAppendend").length == 0){
+        console.log("hello");
+      var template1 = $.trim($("#axis1_insersion").html()),
+      frag1=  '';   //'<tr><th></th>';
+      $.each(captions, function(index,obj){
+          if (index < captions.length-1){
+         frag1 += template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+        }
+        else {
+         frag1 += template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+        }
+        });
+        $('body').append(frag1);
+          console.log(document.getElementById("#tobeAppendend"));
+      }
+      else{
+        $.each(captions, function(index,obj){
+        //  var child = 1;
+        $("#tobeAppendend").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>");
+        //  child += parseInt(obj.colspan);
+      });
+      }
+    }
+
   });
 })();
 /*      var axis0Names = [],
