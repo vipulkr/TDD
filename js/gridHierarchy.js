@@ -1,5 +1,5 @@
 (function(){
-  $.getJSON("../json2.json", function(data1){
+  $.getJSON("../json3.json", function(data1){
     var data = data1[0];
     var axes = data.Axes;
     var axis = axes.Axis;
@@ -52,7 +52,7 @@
     //  console.log(captions);
       var template0 = $.trim($("#axis0_insersion").html()),
       frag0='<tr>';
-        for(var axis1MemberIndex=0, axis1Member = axis1Tuple[0].Member.length; axis1MemberIndex < axis1Member; axis1MemberIndex++){
+        for(var axis1MemberIndex=0, axis1MemberLen = axis1Tuple[0].Member.length; axis1MemberIndex < axis1MemberLen; axis1MemberIndex++){
           frag0 += '<th></th>';
         }
       $.each(captions, function(index,obj){
@@ -122,73 +122,33 @@
       else{
         $.each(captions, function(index,obj){
         //  var child = 1;
-        $("#tobeAppendend").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>");
+        $("#tobeAppendend").append("<tr id='rowData'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
         //  child += parseInt(obj.colspan);
       });
       }
     }
 
+    var cellData = data.CellData,
+         cells = cellData.Cell,
+         val = [];
+   for (var cellIndex in cells) {
+     var valObj = {};
+     valObj.value = cells[cellIndex].FmtValue;
+     val.push(valObj);
+   }
+
+   console.log(val);
+        count =0;
+      for (var j = 0, len1 = axis1Tuple.length; j < len1; j++){
+      //  td='';
+
+        for (var i = 0, len = axis0Tuple.length; i < len; i++) {
+              //console.log(val[count].value);
+              console.log($("#rowData:nth-child("+j+")").text());
+              $("#rowData:nth-child("+(parseInt(axis0Tuple[0].Member.length)+j)+")").append("<td>"+val[count].value+"</td></tr>");
+              count++;
+            }
+      }
+
   });
 })();
-/*      var axis0Names = [],
-axis1Names = [];
-//  console.log(axis0Tuple.length);
-axis0Names.push({name: ""});
-for (var index0 in axis0Tuple){
-//   console.log(axis0Tuple[index0]);
-var axis0Member = axis0Tuple[index0].Member;
-var axis0Name = '';
-for(var memIndex0 in axis0Member){
-axis0Name = axis0Name+axis0Member[memIndex0].Caption+".";
-}
-var axis0NameObj = {};
-axis0NameObj.name = axis0Name.substring(0,axis0Name.length-1);
-//console.log(axis0Name);
-axis0Names.push(axis0NameObj);
-}
-
-var cellData = data.CellData,
-cells = cellData.Cell,
-val = [];
-for (var cellIndex in cells) {
-var valObj = {};
-valObj.value = cells[cellIndex].FmtValue;
-val.push(valObj);
-}
-
-var template0 = $.trim($("#axis0_insersion").html()),
-frag0='';
-$.each(axis0Names, function(index,obj){
-frag0 += template0.replace(/{{axis0Name}}/ig, obj.name);
-});
-$('body').append(frag0);
-
-var count  = 0;
-
-for (var j = 0, len1 = axis1Tuple.length; j < len1; j++) {
-td='';
-var axis1Member = axis1Tuple[j].Member;
-var axis1Name = '';
-for(var memIndex1 in axis1Member){
-axis1Name = axis1Name+axis1Member[memIndex1].Caption+".";
-}
-for (var i = 0, len = axis0Tuple.length; i < len; i++) {
-//    console.log(val[count].value);
-td += "<td>"+val[count].value+"</td>";
-count++;
-}
-var axis1NameObj = {};
-axis1NameObj.name = axis1Name.substring(0,axis1Name.length-1);
-axis1NameObj.td = td;
-axis1Names.push(axis1NameObj);
-}
-
-var template1 = $.trim($("#data_insersion").html()),
-frag1='';
-$.each(axis1Names, function(index,obj){
-frag1 += template1.replace(/{{axis1Name}}/ig, obj.name)
-.replace(/{{value}}/ig, obj.td);
-});
-$('body').append(frag1);
-});
-})();*/

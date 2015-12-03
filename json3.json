@@ -116,13 +116,25 @@
           {
             "Member": [
               {
+                "-Hierarchy": "Positions",
+                "UName": "[Positions].[All Positions]",
+                "Caption": "All Positions",
+                "LName": "[Positions].[(All)]",
+                "LNum": "0",
+                "DisplayInfo": "37"
+              },
+              {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[All Departments]",
                 "Caption": "All Departments",
                 "LName": "[Department].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "65543"
-              },
+              }
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -130,11 +142,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Executive Management]",
@@ -142,7 +150,12 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "0"
-              },
+              }
+
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -150,11 +163,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Finance]",
@@ -162,7 +171,12 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "131072"
-              },
+              }
+
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -170,11 +184,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Human Resource]",
@@ -182,7 +192,12 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "131072"
-              },
+              }
+
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -190,11 +205,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Marketing & Communication]",
@@ -202,7 +213,12 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "131072"
-              },
+              }
+
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -210,11 +226,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Product Development]",
@@ -222,7 +234,12 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "131072"
-              },
+              }
+
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -230,11 +247,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Professional Services]",
@@ -242,7 +255,11 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "131072"
-              },
+              }
+            ]
+          },
+          {
+            "Member": [
               {
                 "-Hierarchy": "Positions",
                 "UName": "[Positions].[All Positions]",
@@ -250,11 +267,7 @@
                 "LName": "[Positions].[(All)]",
                 "LNum": "0",
                 "DisplayInfo": "37"
-              }
-            ]
-          },
-          {
-            "Member": [
+              },
               {
                 "-Hierarchy": "Department",
                 "UName": "[Department].[Sales]",
@@ -262,14 +275,6 @@
                 "LName": "[Department].[Department]",
                 "LNum": "1",
                 "DisplayInfo": "131072"
-              },
-              {
-                "-Hierarchy": "Positions",
-                "UName": "[Positions].[All Positions]",
-                "Caption": "All Positions",
-                "LName": "[Positions].[(All)]",
-                "LNum": "0",
-                "DisplayInfo": "37"
               }
             ]
           }
