@@ -309,6 +309,15 @@
 {
 "Value": {
 "_xsi:type": "xsd:double",
+"__text": "2049625"
+},
+"FmtValue": "2,049,625.00",
+"FormatString": "#,###.00",
+"_CellOrdinal": "0"
+},
+{
+"Value": {
+"_xsi:type": "xsd:double",
 "__text": "549625"
 },
 "FmtValue": "549,625.00",
@@ -656,15 +665,6 @@
 "FmtValue": "814,449.00",
 "FormatString": "#,###.00",
 "_CellOrdinal": "39"
-},
-{
-"Value": {
-"_xsi:type": "xsd:double",
-"__text": "2049625"
-},
-"FmtValue": "2,049,625.00",
-"FormatString": "#,###.00",
-"_CellOrdinal": "0"
 }
 ]
 }
