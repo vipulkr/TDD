@@ -63,12 +63,43 @@
        frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th></tr>");
       }
       });
-      $('body').append(frag0);
+      $('dataTableBody').append(frag0);
     }
 
 /* ********************************** Axis1 Hierarchical Structure **************************************** */
 
-    for (var axis1HierLevel = 0, axis1HierLen = axis1Tuple[0].Member.length ; axis1HierLevel < axis1HierLen; axis1HierLevel++) {
+
+var cellData = data.CellData,
+     cells = cellData.Cell,
+     val = [];
+for (var cellIndex in cells) {
+ var valObj = {};
+ valObj.value = cells[cellIndex].FmtValue;
+ val.push(valObj);
+}
+
+count  = 0;
+var dataArray = [];
+for (var j = 0, len1 = axis1Tuple.length; j < len1; j++) {
+td='';
+var axis1Member = axis1Tuple[j].Member;
+var axis1Name = '';
+for(var memIndex1 in axis1Member){
+  axis1Name = axis1Name+axis1Member[memIndex1].Caption+".";
+}
+var tempDataObj = {};
+for (var i = 0, len = axis0Tuple.length; i < len; i++) {
+  console.log(val[count].value);
+  td += "<td>"+val[count].value+"</td>";
+  count++;
+}
+tempDataObj.td = td;
+dataArray.push(tempDataObj);
+}
+console.log(dataArray);
+
+
+    for (var axis1HierLevel = 0, axis1HierLen = axis1Tuple[0].Member.length-1 ; axis1HierLevel < axis1HierLen; axis1HierLevel++) {
       captions = [];
       obj={};
       flag = false;
@@ -99,93 +130,29 @@
         }
       }
       console.log(captions);
+
+      if ($.find("#tobeAppendend").length == 0){
+       console.log("hello");
+     var template1 = $.trim($("#axis1_insersion").html()),
+     frag1=  '';   //'<tr><th></th>';
+     $.each(captions, function(index,obj){
+         if (index < captions.length-1){
+        frag1 += template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+       }
+       else {
+        frag1 += template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+       }
+       });
+       $('body').append(frag1);
+         console.log(document.getElementById("#tobeAppendend"));
+     }
+     else{
+       $.each(captions, function(index,obj){
+       //  var child = 1;
+       $("#tobeAppendend").append("<tr id='rowData'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+       //  child += parseInt(obj.colspan);
+     });
     }
-
-    var cellData = data.CellData,
-          cells = cellData.Cell,
-          val = [];
-    for (var cellIndex in cells) {
-      var valObj = {};
-      valObj.value = cells[cellIndex].FmtValue;
-      val.push(valObj);
-    }
-
-    console.log(val);
-         count =0;
-       for (var j = 0, len1 = axis1Tuple.length; j < len1; j++){
-       //  td='';
-
-         for (var i = 0, len = axis0Tuple.length; i < len; i++) {
-               //console.log(val[count].value);
-               console.log($("#rowData:nth-child("+j+")").text());
-               $("#rowData:nth-child("+(parseInt(axis0Tuple[0].Member.length)+j)+")").append("<td>"+val[count].value+"</td></tr>");
-               count++;
-             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //   //  if (! ($("body").children("#dataTable").children("tr#tobeAppendend"))){
-  // //  console.log($.find("#tobeAppendend"));
-  // //    if (! document.getElementById("#tobeAppendend")){
-  //
-  // if ($.find("#tobeAppendend").length == 0){
-  //       console.log("hello");
-  //     var template1 = $.trim($("#axis1_insersion").html()),
-  //     frag1=  '';   //'<tr><th></th>';
-  //     $.each(captions, function(index,obj){
-  //         if (index < captions.length-1){
-  //        frag1 += template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
-  //       }
-  //       else {
-  //        frag1 += template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
-  //       }
-  //       });
-  //       $('body').append(frag1);
-  //         console.log(document.getElementById("#tobeAppendend"));
-  //     }
-  //     else{
-  //       $.each(captions, function(index,obj){
-  //       //  var child = 1;
-  //       $("#tobeAppendend").append("<tr id='rowData'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
-  //       //  child += parseInt(obj.colspan);
-  //     });
-  //     }
-  //   }
-  //
-  //   var cellData = data.CellData,
-  //        cells = cellData.Cell,
-  //        val = [];
-  //  for (var cellIndex in cells) {
-  //    var valObj = {};
-  //    valObj.value = cells[cellIndex].FmtValue;
-  //    val.push(valObj);
-  //  }
-  //
-  //  console.log(val);
-  //       count =0;
-  //     for (var j = 0, len1 = axis1Tuple.length; j < len1; j++){
-  //     //  td='';
-  //
-  //       for (var i = 0, len = axis0Tuple.length; i < len; i++) {
-  //             //console.log(val[count].value);
-  //             console.log($("#rowData:nth-child("+j+")").text());
-  //             $("#rowData:nth-child("+(parseInt(axis0Tuple[0].Member.length)+j)+")").append("<td>"+val[count].value+"</td></tr>");
-  //             count++;
-  //           }
-  //
-
+  }
   });
 })();
