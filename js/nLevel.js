@@ -1,5 +1,5 @@
 (function(){
-  $.getJSON("../json4.json", function(data1){
+  $.getJSON("../json7.json", function(data1){
     var data = data1[0];  // data can itself be an object
     var axes = data.Axes;
     var axis = axes.Axis;
@@ -137,33 +137,87 @@
       captionsArray.push(captions);
     }
     console.log(captionsArray);
-  if ($.find("#tobeAppendend").length == 0){
-        console.log("hello");
-      var template1 = $.trim($("#axis1_insersion").html()),
-      frag1=  '';
-      var captionsArrayIndex = 0;
-      var prevColspan = 0;
-      $.each(captionsArray[captionsArrayIndex], function(index,obj){
-        console.log(prevColspan);
-         frag1 = template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
-         //alert("ok1");
-         $('#dataTableBody').append(frag1);
-        for(var rowIndex=0; rowIndex < obj.colspan; rowIndex++){
-          //alert("ok2");
-          console.log(rowIndex+(index*parseInt(prevColspan)));
-          console.log(dataArray[rowIndex+(index*parseInt(prevColspan))].td);
-            if (parseInt(rowIndex) === 0){
-             $("#tobeAppendend:last-child").append("<th rowspan="+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].caption+"</th>"+dataArray[rowIndex+(index*parseInt(prevColspan))].td);
+    appendRowData(captionsArray, dataArray);
+
+    //  var captionsArrayIndex = 0;
+
+  function appendRowData(captionsArray, dataArray){
+    var index = 0;
+    var elementLeft = [];
+    var rowspanApplied = [];
+    var rowspanAppliedPrev = [];
+    for(var captionsArrayIndex in captionsArray){
+      console.log(captionsArray[captionsArrayIndex]);
+      elementLeft.push(captionsArray[captionsArrayIndex].length);
+    //  var rowspan = 0;
+    //   for(var colArray in captionsArray[captionsArrayIndex]){
+    //     console.log(captionsArray[captionsArrayIndex][colArray]);
+    //   rowspan += parseInt(captionsArray[captionsArrayIndex][colArray].colspan);
+    // }
+      rowspanApplied.push(0);
+    }
+    var initialElement = elementLeft;
+    rowspanAppliedPrev = rowspanApplied;
+    console.log(initialElement);
+  //  console.log(elementLeft.pop());
+  while(elementLeft[(elementLeft.length)-1] > 0){
+    alert("hi1");
+    for(captionsArrayIndex in captionsArray){
+      alert("hi2");
+      var obj = captionsArray[captionsArrayIndex][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
+        if ($.find("#tobeAppendend").length === 0){
+          alert("hi first time");
+          $('#dataTableBody').append("<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+          elementLeft[captionsArrayIndex] = parseInt(elementLeft[captionsArrayIndex]) - 1;
+          rowspanAppliedPrev = rowspanApplied;
+          rowspanApplied[captionsArrayIndex] = obj.colspan;
+        }
+        else{
+          alert("hi not first time");
+          console.log(rowspanApplied[parseInt(captionsArrayIndex)-1]+" "+rowspanApplied[parseInt(captionsArrayIndex)]);
+          if(rowspanApplied[parseInt(captionsArrayIndex)-1] > rowspanApplied[parseInt(captionsArrayIndex)]){
+            alert("hi to be rendered");
+            prevObj = captionsArray[parseInt(captionsArrayIndex)-1][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
+            obj = captionsArray[parseInt(captionsArrayIndex)][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
+            console.log(captionsArrayIndex+"  captionsArray.length-2 "+captionsArray.length-2);
+            if(parseInt(captionsArrayIndex) === captionsArray.length-2){
+              alert("hi last element");
+              for(var rowIndex1=0; rowIndex1 < prevObj.colspan; rowIndex1++){
+                  if (parseInt(rowIndex1) === 0){
+                   $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td);
+                 }
+                 else{
+                     $("#dataTableBody").append("<tr><th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied.length-1].td+"</tr>");
+                 }
+                 elementLeft[parseInt(captionsArrayIndex)-1] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
+                 rowspanAppliedPrev = rowspanApplied;
+                 console.log(obj.colspan);
+                 rowspanApplied[parseInt(captionsArrayIndex)] = obj.colspan;
+               }
+               captionsArrayIndex = 0;
+            }
+            else{
+              alert("hi intermediate element");
+            if (rowspanApplied[parseInt(captionsArrayIndex)] === 0 || rowspanApplied[parseInt(captionsArrayIndex)] == rowspanAppliedPrev[parseInt(captionsArrayIndex)-1]){
+             $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>");
            }
            else{
-               $("#dataTableBody").append("<tr><th rowspan="+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].caption+"</th>"+dataArray[rowIndex+(index*parseInt(prevColspan))].td+"</tr>");
+               $("#dataTableBody").append("<tr><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
            }
+           elementLeft[parseInt(captionsArrayIndex)-1] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
+           rowspanAppliedPrev = rowspanApplied;
+           console.log(obj.colspan);
+           rowspanApplied[parseInt(captionsArrayIndex)] = obj.colspan;
+          }
         }
-      //  $('#dataTableBody').append(frag1);
-      prevColspan += obj.colspan;
-      });
+        }
+    }
+    console.log(rowspanApplied);
+  // elementLeft[(elementLeft.length)-1] = -1;
+  elementLeft[(elementLeft.length)-1] = elementLeft[(elementLeft.length)-1] -2;
+  }
+  }
 
-      }
 
-  });
+});
 })();

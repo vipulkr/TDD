@@ -1,5 +1,5 @@
 (function(){
-  $.getJSON("../json4.json", function(data1){
+  $.getJSON("../json7.json", function(data1){
     var data = data1[0];  // data can itself be an object
     var axes = data.Axes;
     var axis = axes.Axis;
@@ -137,33 +137,82 @@
       captionsArray.push(captions);
     }
     console.log(captionsArray);
-  if ($.find("#tobeAppendend").length == 0){
-        console.log("hello");
+
       var template1 = $.trim($("#axis1_insersion").html()),
       frag1=  '';
-      var captionsArrayIndex = 0;
       var prevColspan = 0;
+      var captionsArrayIndex = 0;
       $.each(captionsArray[captionsArrayIndex], function(index,obj){
-        console.log(prevColspan);
-         frag1 = template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
-         //alert("ok1");
-         $('#dataTableBody').append(frag1);
-        for(var rowIndex=0; rowIndex < obj.colspan; rowIndex++){
-          //alert("ok2");
-          console.log(rowIndex+(index*parseInt(prevColspan)));
-          console.log(dataArray[rowIndex+(index*parseInt(prevColspan))].td);
+           frag1 = template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+           $('#dataTableBody').append(frag1);
+           appendRowData(captionsArray, captionsArrayIndex, obj.colspan);
+         });
+  function appendRowData(captionsArray, captionsArrayIndex, colspan){
+   alert("hi1");
+    if (captionsArrayIndex  < captionsArray.length-1){
+     alert("hi2");
+    if (parseInt(captionsArrayIndex) < captionsArray.length-2){
+     alert("hi3");
+     console.log("if"+colspan);
+        for(var rowIndex=0; rowIndex < captionsArray[parseInt(captionsArrayIndex)+1].length; rowIndex++){ //captionsArray[parseInt(captionsArrayIndex)+1].length
             if (parseInt(rowIndex) === 0){
-             $("#tobeAppendend:last-child").append("<th rowspan="+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].caption+"</th>"+dataArray[rowIndex+(index*parseInt(prevColspan))].td);
+              console.log("ok1");
+             $("#tobeAppendend:last-child").append("<th rowspan="+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex].colspan+">"+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex].caption+"</th>");
+          //  appendRowData(captionsArray, parseInt(captionsArrayIndex)+1, captionsArray[parseInt(captionsArrayIndex)+1][rowIndex].colspan);
            }
            else{
-               $("#dataTableBody").append("<tr><th rowspan="+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex+(index*parseInt(prevColspan))].caption+"</th>"+dataArray[rowIndex+(index*parseInt(prevColspan))].td+"</tr>");
+             console.log("ok2");
+               $("#dataTableBody").append("<tr><th rowspan="+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex].colspan+">"+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex].caption+"</th>");
+            //    appendRowData(captionsArray, parseInt(captionsArrayIndex)+1, colspan);
+           }
+         }}
+      else if (captionsArrayIndex == captionsArray.length-2){
+       alert("hi4");
+       console.log("else"+colspan);
+        for(var rowIndex1=0; rowIndex1 < colspan; rowIndex1++){
+           //captionsArray[parseInt(captionsArrayIndex)+1].length
+           alert("h5");
+            if (parseInt(rowIndex1) === 0){
+             $("#tobeAppendend:last-child").append("<th rowspan="+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex1].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex1].caption+"</th>"+dataArray[rowIndex1].td);
+           }
+           else{
+               $("#dataTableBody").append("<tr><th rowspan="+captionsArray[captionsArrayIndex+1][rowIndex1].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex1].caption+"</th>"+dataArray[rowIndex1].td+"</tr>");
            }
         }
-      //  $('#dataTableBody').append(frag1);
-      prevColspan += obj.colspan;
-      });
-
       }
-
-  });
+      captionsArrayIndex++ ;
+      appendRowData(captionsArray, captionsArrayIndex,colspan);
+    }
+  }
+});
 })();
+    //   for(var captionsArrayIndex in captionsArray){
+    //     alert("hi");
+    //   $.each(captionsArray[captionsArrayIndex], function(index,obj){
+    //      frag1 = template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+    //      $('#dataTableBody').append(frag1);
+    //      if (parseInt(captionsArrayIndex) < captionsArray.length-1){
+    //     for(var rowIndex=0; rowIndex < captionsArray[parseInt(captionsArrayIndex)+1].length; rowIndex++){
+    //         if (parseInt(rowIndex) === 0){
+    //          $("#tobeAppendend:last-child").append("<th rowspan="+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex+(index*parseInt(prevColspan))].colspan+">"+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex+(index*parseInt(prevColspan))].caption+"</th>");
+    //        }
+    //        else{
+    //            $("#dataTableBody").append("<tr><th rowspan="+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex+(index*parseInt(prevColspan))].colspan+">"+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex+(index*parseInt(prevColspan))].caption+"</th>");
+    //        }
+    //      }}
+    //   else{
+    //     for(var rowIndex1=0; rowIndex1 < captionsArray[parseInt(captionsArrayIndex)+1].length; rowIndex1++){
+    //         if (parseInt(rowIndex1) === 0){
+    //          $("#tobeAppendend:last-child").append("<th rowspan="+captionsArray[parseInt(captionsArrayIndex)+1][rowIndex1+(index*parseInt(prevColspan))].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex1+(index*parseInt(prevColspan))].caption+"</th>"+dataArray[rowIndex1+(index*parseInt(prevColspan))].td);
+    //        }
+    //        else{
+    //            $("#dataTableBody").append("<tr><th rowspan="+captionsArray[captionsArrayIndex+1][rowIndex1+(index*parseInt(prevColspan))].colspan+">"+captionsArray[captionsArrayIndex+1][rowIndex1+(index*parseInt(prevColspan))].caption+"</th>"+dataArray[rowIndex1+(index*parseInt(prevColspan))].td+"</tr>");
+    //        }
+    //     }
+    //   }
+    //   //  $('#dataTableBody').append(frag1);
+    //   prevColspan += obj.colspan;
+    //   //captionsArrayIndex++;
+    //   });
+    // }
+  //    }
