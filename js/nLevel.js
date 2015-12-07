@@ -92,14 +92,14 @@
       }
       var tempDataObj = {};
       for (var i = 0, len = axis0Tuple.length; i < len; i++) {
-        console.log(val[count].value);
+        // console.log(val[count].value);
         td += "<td>"+val[count].value+"</td>";
         count++;
       }
       tempDataObj.td = td;
       dataArray.push(tempDataObj);
       }
-      console.log(dataArray);
+      // console.log(dataArray);
 
 
       var captionsArray = [];
@@ -133,88 +133,123 @@
             }
         }
       }
-      console.log(captions);
+      // console.log(captions);
       captionsArray.push(captions);
     }
-    console.log(captionsArray);
+    // console.log(captionsArray);
     appendRowData(captionsArray, dataArray);
 
     //  var captionsArrayIndex = 0;
 
   function appendRowData(captionsArray, dataArray){
     var index = 0;
-    var elementLeft = [];
+    var initialElement = [];
+    var elementLeft= [];
     var rowspanApplied = [];
     var rowspanAppliedPrev = [];
     for(var captionsArrayIndex in captionsArray){
-      console.log(captionsArray[captionsArrayIndex]);
+      // console.log(captionsArray[captionsArrayIndex]);
+      initialElement.push(captionsArray[captionsArrayIndex].length);
       elementLeft.push(captionsArray[captionsArrayIndex].length);
-    //  var rowspan = 0;
-    //   for(var colArray in captionsArray[captionsArrayIndex]){
-    //     console.log(captionsArray[captionsArrayIndex][colArray]);
-    //   rowspan += parseInt(captionsArray[captionsArrayIndex][colArray].colspan);
-    // }
       rowspanApplied.push(0);
+      rowspanAppliedPrev.push(0);
     }
-    var initialElement = elementLeft;
-    rowspanAppliedPrev = rowspanApplied;
-    console.log(initialElement);
-  //  console.log(elementLeft.pop());
+//  console.log(captionsArray);
+  var rowspanAppliedIndex;
   while(elementLeft[(elementLeft.length)-1] > 0){
-    alert("hi1");
+    // console.log(elementLeft);
     for(captionsArrayIndex in captionsArray){
-      alert("hi2");
+      // console.log(captionsArrayIndex);
       var obj = captionsArray[captionsArrayIndex][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
-        if ($.find("#tobeAppendend").length === 0){
+        //if ($.find("#tobeAppendend").length === 0){
+        if (parseInt(captionsArrayIndex) === 0){
+          if(rowspanApplied[parseInt(captionsArrayIndex)] <= rowspanApplied[parseInt(captionsArrayIndex)+1]){
           alert("hi first time");
           $('#dataTableBody').append("<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
           elementLeft[captionsArrayIndex] = parseInt(elementLeft[captionsArrayIndex]) - 1;
-          rowspanAppliedPrev = rowspanApplied;
-          rowspanApplied[captionsArrayIndex] = obj.colspan;
+          for(rowspanAppliedIndex in rowspanApplied){
+          rowspanAppliedPrev[rowspanAppliedIndex] = rowspanApplied[rowspanAppliedIndex];
+          }
+        //  console.log(rowspanAppliedPrev);
+        //  console.log(rowspanApplied);
+          rowspanApplied[captionsArrayIndex] += obj.colspan;
+        //  console.log(elementLeft);
+        //  console.log(rowspanApplied);
         }
+      }
         else{
           alert("hi not first time");
-          console.log(rowspanApplied[parseInt(captionsArrayIndex)-1]+" "+rowspanApplied[parseInt(captionsArrayIndex)]);
+          // console.log(rowspanApplied[parseInt(captionsArrayIndex)-1]+" "+rowspanApplied[parseInt(captionsArrayIndex)]);
           if(rowspanApplied[parseInt(captionsArrayIndex)-1] > rowspanApplied[parseInt(captionsArrayIndex)]){
             alert("hi to be rendered");
-            prevObj = captionsArray[parseInt(captionsArrayIndex)-1][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
+          //  console.log(parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex]));
+            prevObj = captionsArray[parseInt(captionsArrayIndex)-1][parseInt(parseInt(initialElement[parseInt(captionsArrayIndex)-1])-parseInt(elementLeft[parseInt(captionsArrayIndex)-1]))-1];
             obj = captionsArray[parseInt(captionsArrayIndex)][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
-            console.log(captionsArrayIndex+"  captionsArray.length-2 "+captionsArray.length-2);
-            if(parseInt(captionsArrayIndex) === captionsArray.length-2){
+          //  console.log(prevObj);
+          //  console.log(obj);
+        //    console.log(captionsArrayIndex);
+        //    console.log(captionsArray.length-1);
+// console.log(dataArray);
+            if(parseInt(captionsArrayIndex) === captionsArray.length-1){
               alert("hi last element");
-              for(var rowIndex1=0; rowIndex1 < prevObj.colspan; rowIndex1++){
-                  if (parseInt(rowIndex1) === 0){
-                   $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td);
+                for(var rowIndex1=0; rowIndex1 < prevObj.colspan; rowIndex1++){
+                  // console.log(rowspanApplied[rowspanApplied.length-1]);
+                    if (parseInt(rowIndex1) === 0){
+                     $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td);
+                     console.log(rowspanApplied[rowspanApplied.length-1]);
+                     console.log(dataArray[rowspanApplied[rowspanApplied.length-1]]);
+                   }
+                   else{
+                       $("#dataTableBody").append("<tr><th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td+"</tr>");
+                     console.log(rowspanApplied[rowspanApplied.length-1]);
+                     console.log(dataArray[rowspanApplied[rowspanApplied.length-1]]);
+                   }
+                   elementLeft[parseInt(captionsArrayIndex)] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
+                   for(rowspanAppliedIndex in rowspanApplied){
+                   rowspanAppliedPrev[rowspanAppliedIndex] = rowspanApplied[rowspanAppliedIndex];
+                   }
+        //           console.log(obj.colspan);
+                   rowspanApplied[parseInt(captionsArrayIndex)] += obj.colspan;
+      //             console.log(initialElement[captionsArrayIndex]);
+            //       console.log(elementLeft[captionsArrayIndex]);
+              //     console.log(parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex]));
+                   obj = captionsArray[parseInt(captionsArrayIndex)][parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex])];
                  }
-                 else{
-                     $("#dataTableBody").append("<tr><th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied.length-1].td+"</tr>");
-                 }
-                 elementLeft[parseInt(captionsArrayIndex)-1] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
-                 rowspanAppliedPrev = rowspanApplied;
-                 console.log(obj.colspan);
-                 rowspanApplied[parseInt(captionsArrayIndex)] = obj.colspan;
-               }
-               captionsArrayIndex = 0;
+                 rowspanAppliedPrev[captionsArrayIndex] = rowspanApplied[captionsArrayIndex];
+                //  console.log(elementLeft);
+                //   console.log(rowspanApplied);
+                //   console.log(rowspanAppliedPrev);
+            //   captionsArrayIndex = 0;
+            //   elementLeft[parseInt(captionsArrayIndex)] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
             }
             else{
               alert("hi intermediate element");
+          //    console.log(rowspanApplied[parseInt(captionsArrayIndex)]);
+          //    console.log(rowspanAppliedPrev[parseInt(captionsArrayIndex)-1]);
+          //    console.log(rowspanApplied);
+              // console.log(rowspanAppliedPrev);
             if (rowspanApplied[parseInt(captionsArrayIndex)] === 0 || rowspanApplied[parseInt(captionsArrayIndex)] == rowspanAppliedPrev[parseInt(captionsArrayIndex)-1]){
              $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>");
            }
            else{
-               $("#dataTableBody").append("<tr><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+               $("#dataTableBody").append("<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
            }
-           elementLeft[parseInt(captionsArrayIndex)-1] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
-           rowspanAppliedPrev = rowspanApplied;
-           console.log(obj.colspan);
-           rowspanApplied[parseInt(captionsArrayIndex)] = obj.colspan;
+           elementLeft[parseInt(captionsArrayIndex)] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
+           for(rowspanAppliedIndex in rowspanApplied){
+           rowspanAppliedPrev[rowspanAppliedIndex] = rowspanApplied[rowspanAppliedIndex];
+           }
+          //  console.log(obj.colspan);
+           rowspanApplied[parseInt(captionsArrayIndex)] += obj.colspan;
+          //  console.log(elementLeft);
+          //  console.log(rowspanApplied);
+          //  console.log(rowspanAppliedPrev);
           }
         }
         }
     }
-    console.log(rowspanApplied);
+    // console.log(rowspanApplied);
   // elementLeft[(elementLeft.length)-1] = -1;
-  elementLeft[(elementLeft.length)-1] = elementLeft[(elementLeft.length)-1] -2;
+  // elementLeft[(elementLeft.length)-1] = elementLeft[(elementLeft.length)-1] -1;
   }
   }
 

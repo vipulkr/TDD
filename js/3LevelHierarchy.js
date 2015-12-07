@@ -140,7 +140,7 @@
 
       var template1 = $.trim($("#axis1_insersion").html()),
       frag1=  '';
-      var prevColspan = 0;
+      var prevColspan = 0;  
       var captionsArrayIndex = 0;
       $.each(captionsArray[captionsArrayIndex], function(index,obj){
            frag1 = template1.replace(/{{axis1}}/ig, "<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
