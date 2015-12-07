@@ -1,5 +1,5 @@
 (function(){
-  $.getJSON("../json4.json", function(data1){
+  $.getJSON("../json3.json", function(data1){
     var data = data1[0];  // data can itself be an object
     var axes = data.Axes;
     var axis = axes.Axis;
@@ -27,7 +27,7 @@
           flag = true;
       //    console.log("hi");
           obj.caption = axis0Tuple[0].Member[axis0HierLevel].Caption;
-          obj.colspan = count;
+          obj.span = count;
           captions.push(obj);
         }
 
@@ -37,7 +37,7 @@
           if (obj.caption){obj = {};}
           obj.caption = axis0Tuple[axis0TupleIndex].Member[axis0HierLevel].Caption;
           count= 1;
-          obj.colspan = count;
+          obj.span = count;
           captions.push(obj);
         //  obj={};
         }
@@ -45,17 +45,12 @@
             count++;
             for (var captionIndex in captions){
               if (captions[captionIndex].caption == axis0Tuple[axis0TupleIndex].Member[axis0HierLevel].Caption){
-                captions[captionIndex].colspan = count;
+                captions[captionIndex].span = count;
               }
             }
         }
       //  console.log(count);
       }
-
-        for(captionIndex in captions){
-          
-        }
-
     //  console.log(count);
     //  console.log(captions);
       var template0 = $.trim($("#axis0_insersion").html()),
@@ -65,10 +60,10 @@
         }
       $.each(captions, function(index,obj){
         if (index < captions.length-1){
-       frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th>");
+       frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.span)+">"+obj.caption+"</th>");
       }
       else {
-       frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.colspan)+">"+obj.caption+"</th></tr>");
+       frag0 += template0.replace(/{{axis0}}/ig, "<th colspan="+parseInt(obj.span)+">"+obj.caption+"</th></tr>");
       }
       });
       $('#dataTableBody').append(frag0);
@@ -118,14 +113,14 @@
           flag = true;
       //    console.log("hi");
           obj.caption = axis1Tuple[0].Member[axis1HierLevel].Caption;
-          obj.colspan = count;
+          obj.span = count;
           captions.push(obj);
         }
         if(obj.caption !== axis1Tuple[axis1TupleIndex].Member[axis1HierLevel].Caption){
           if (obj.caption){obj = {};}
           obj.caption = axis1Tuple[axis1TupleIndex].Member[axis1HierLevel].Caption;
           count= 1;
-          obj.colspan = count;
+          obj.span = count;
           captions.push(obj);
           //obj={};
         }
@@ -133,7 +128,7 @@
             count++;
             for (var caption1Index in captions){
               if (captions[caption1Index].caption == axis1Tuple[axis1TupleIndex].Member[axis1HierLevel].Caption){
-                captions[caption1Index].colspan = count;
+                captions[caption1Index].span = count;
               }
             }
         }
@@ -141,10 +136,26 @@
       // console.log(captions);
       captionsArray.push(captions);
     }
-    // console.log(captionsArray);
+    console.log(captionsArray);
+    captionsArray = shortCaptionsArray(captionsArray);
+    console.log(captionsArray);
     appendRowData(captionsArray, dataArray);
 
     //  var captionsArrayIndex = 0;
+
+  function shortCaptionsArray(captionsArray){
+    //console.log(captions);
+    for(var captionArrayIndex in captionsArray){
+      if (parseInt(captionArrayIndex) < captionsArray.length-1){
+      if (captionsArray[captionArrayIndex].length > captionsArray[parseInt(captionArrayIndex)+1].length){
+        var temp = captionsArray[captionArrayIndex];
+            captionsArray[captionArrayIndex] = captionsArray[parseInt(captionArrayIndex)+1];
+            captionsArray[parseInt(captionArrayIndex)+1] = temp;
+      }
+    }
+    }
+    return captionsArray;
+  }
 
   function appendRowData(captionsArray, dataArray){
     var index = 0;
@@ -170,14 +181,14 @@
         if (parseInt(captionsArrayIndex) === 0){
           if(rowspanApplied[parseInt(captionsArrayIndex)] <= rowspanApplied[parseInt(captionsArrayIndex)+1]){
           alert("hi first time");
-          $('#dataTableBody').append("<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+          $('#dataTableBody').append("<tr id='tobeAppendend'><th rowspan="+obj.span+">"+obj.caption+"</th></tr>");
           elementLeft[captionsArrayIndex] = parseInt(elementLeft[captionsArrayIndex]) - 1;
           for(rowspanAppliedIndex in rowspanApplied){
           rowspanAppliedPrev[rowspanAppliedIndex] = rowspanApplied[rowspanAppliedIndex];
           }
         //  console.log(rowspanAppliedPrev);
         //  console.log(rowspanApplied);
-          rowspanApplied[captionsArrayIndex] += obj.colspan;
+          rowspanApplied[captionsArrayIndex] += obj.span;
         //  console.log(elementLeft);
         //  console.log(rowspanApplied);
         }
@@ -197,15 +208,15 @@
 // console.log(dataArray);
             if(parseInt(captionsArrayIndex) === captionsArray.length-1){
               alert("hi last element");
-                for(var rowIndex1=0; rowIndex1 < prevObj.colspan; rowIndex1++){
+                for(var rowIndex1=0; rowIndex1 < prevObj.span; rowIndex1++){
                   // console.log(rowspanApplied[rowspanApplied.length-1]);
                     if (parseInt(rowIndex1) === 0){
-                     $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td);
+                     $("#tobeAppendend:last-child").append("<th rowspan="+obj.span+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td);
                      console.log(rowspanApplied[rowspanApplied.length-1]);
                      console.log(dataArray[rowspanApplied[rowspanApplied.length-1]]);
                    }
                    else{
-                       $("#dataTableBody").append("<tr><th rowspan="+obj.colspan+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td+"</tr>");
+                       $("#dataTableBody").append("<tr><th rowspan="+obj.span+">"+obj.caption+"</th>"+dataArray[rowspanApplied[rowspanApplied.length-1]].td+"</tr>");
                      console.log(rowspanApplied[rowspanApplied.length-1]);
                      console.log(dataArray[rowspanApplied[rowspanApplied.length-1]]);
                    }
@@ -213,8 +224,8 @@
                    for(rowspanAppliedIndex in rowspanApplied){
                    rowspanAppliedPrev[rowspanAppliedIndex] = rowspanApplied[rowspanAppliedIndex];
                    }
-        //           console.log(obj.colspan);
-                   rowspanApplied[parseInt(captionsArrayIndex)] += obj.colspan;
+        //           console.log(obj.span);
+                   rowspanApplied[parseInt(captionsArrayIndex)] += obj.span;
       //             console.log(initialElement[captionsArrayIndex]);
             //       console.log(elementLeft[captionsArrayIndex]);
               //     console.log(parseInt(initialElement[captionsArrayIndex])-parseInt(elementLeft[captionsArrayIndex]));
@@ -234,17 +245,17 @@
           //    console.log(rowspanApplied);
               // console.log(rowspanAppliedPrev);
             if (rowspanApplied[parseInt(captionsArrayIndex)] === 0 || rowspanApplied[parseInt(captionsArrayIndex)] == rowspanAppliedPrev[parseInt(captionsArrayIndex)-1]){
-             $("#tobeAppendend:last-child").append("<th rowspan="+obj.colspan+">"+obj.caption+"</th>");
+             $("#tobeAppendend:last-child").append("<th rowspan="+obj.span+">"+obj.caption+"</th>");
            }
            else{
-               $("#dataTableBody").append("<tr id='tobeAppendend'><th rowspan="+obj.colspan+">"+obj.caption+"</th></tr>");
+               $("#dataTableBody").append("<tr id='tobeAppendend'><th rowspan="+obj.span+">"+obj.caption+"</th></tr>");
            }
            elementLeft[parseInt(captionsArrayIndex)] = parseInt(elementLeft[parseInt(captionsArrayIndex)]) - 1;
            for(rowspanAppliedIndex in rowspanApplied){
            rowspanAppliedPrev[rowspanAppliedIndex] = rowspanApplied[rowspanAppliedIndex];
            }
-          //  console.log(obj.colspan);
-           rowspanApplied[parseInt(captionsArrayIndex)] += obj.colspan;
+          //  console.log(obj.span);
+           rowspanApplied[parseInt(captionsArrayIndex)] += obj.span;
           //  console.log(elementLeft);
           //  console.log(rowspanApplied);
           //  console.log(rowspanAppliedPrev);
