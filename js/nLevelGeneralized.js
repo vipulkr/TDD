@@ -12,11 +12,6 @@
 
 /* ********************************** Axis0 Hierarchical Structure **************************************** */
 
-    var captions = [];
-    var obj={};
-    var flag = false;
-    var count = 0;
-
     for (var axis0HierLevel = 0, axis0HierLen = axis0Tuple[0].Member.length ; axis0HierLevel < axis0HierLen; axis0HierLevel++) {
       captions = [];
       obj={};
@@ -268,7 +263,8 @@
   // elementLeft[(elementLeft.length)-1] = elementLeft[(elementLeft.length)-1] -1;
   }
   }
-
-
+  $("tr th").css('background-color','white');
+  $("tr:nth-child(even) td").css('background-color','lightblue');
+  $("tr:nth-child(even) td").prev().css('background-color','lightblue');
 });
 })();
