@@ -1,5 +1,5 @@
 (function(){
-  $.getJSON("../json2.json", function(data1){
+  $.getJSON("../json7.json", function(data1){
       var data = data1[0];
       console.log(data);
       var axes = data.Axes;

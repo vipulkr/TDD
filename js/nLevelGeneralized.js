@@ -51,6 +51,11 @@
         }
       //  console.log(count);
       }
+
+        for(captionIndex in captions){
+          
+        }
+
     //  console.log(count);
     //  console.log(captions);
       var template0 = $.trim($("#axis0_insersion").html()),
