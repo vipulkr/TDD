@@ -7,30 +7,6 @@
 
     /* ********************************** Axis0 Hierarchical Structure **************************************** */
 
-          addElement = function(members, tree, level) {
-      var child;
-      if (axis0[0] != null) {
-        child = axis0[0];
-        if (!tree[child.UName]) {
-          tree[child.UName] = {
-            count: 0,
-            children: {}
-          };
-        }
-        tree[child.UName].count += 1;
-        tree[child.UName].level = level;
-        addElement(members.slice(1), tree[child.UName].children, level + 1);
-      }
-      return tree;
-    };
-
-    ans = members.reduce((function(acc, member) {
-      return addElement(member["Member"], acc, 1);
-    }), {});
-
-
-    // Mukunds javascript
-
     for (var axis0HierLevel = 0, axis0HierLen = axis0[0].Member.length ; axis0HierLevel < axis0HierLen; axis0HierLevel++) {
       captions = [];
       obj={};
