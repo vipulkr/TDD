@@ -70,7 +70,7 @@
               "index": 0,
               "hierarchy": "Measures",
               "UName": "[Measures].[Budget]",
-              "Caption": "Actual",
+              "Caption": "Budget",
               "LName": "[Measures].[MeasuresLevel]",
               "LNum": 0,
               "DisplayInfo": 0
@@ -101,7 +101,7 @@
               "index": 0,
               "hierarchy": "Measures",
               "UName": "[Measures].[Budget]",
-              "Caption": "Actual",
+              "Caption": "Budget",
               "LName": "[Measures].[MeasuresLevel]",
               "LNum": 0,
               "DisplayInfo": 0
@@ -132,7 +132,7 @@
               "index": 0,
               "hierarchy": "Measures",
               "UName": "[Measures].[Budget]",
-              "Caption": "Actual",
+              "Caption": "Budget",
               "LName": "[Measures].[MeasuresLevel]",
               "LNum": 0,
               "DisplayInfo": 0

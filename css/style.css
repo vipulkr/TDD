@@ -1,10 +1,54 @@
-table, th, td{
-  border: 1px solid black;
+
+.grid{
+  width:800px;
+  height: 400px;
+}
+div#section_result, div#topDiv, div#bottomDiv {
+  float: left;
+}
+div#section_result th,div#section_result td{
+  padding: 10px;
+  text-align: center
+}
+div#section_result table, div#section_result th,div#section_result td {
+  border: 1px solid lightgrey;
   border-collapse: collapse;
 }
-th, td{
-  padding: 10px;
+div#topLeft, div#bottomLeft {
+  float: left;
+  clear:both;
 }
-th{
-  font-size: 18px;
+div#topLeft {
+  overflow: hidden;
 }
+div#topRight {
+  float: left;
+  overflow-x: hidden;
+}
+div#bottomLeft {
+  overflow-y: hidden;
+}
+div#bottomRight {
+  float: left;
+  overflow-y: scroll;
+  padding-right: 17px;
+  overflow-x: scroll;
+  padding-bottom: 17px;
+}
+
+table {
+  table-layout: fixed;
+}
+
+/*div#topRight th {
+  width:30px;
+}*/
+/*div.grid {
+  width: 400px;
+  height: 400px;
+  overflow: hidden;
+}
+
+div#bottomRight {
+  overflow: scroll;
+}*/
